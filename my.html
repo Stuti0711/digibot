@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Floating Chat Button (Image) */
+        #chat-button {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            cursor: pointer;
+            width: 120px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        /* Pre-Chat Form */
+        #chat-form-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: #ffe6e6; /* Light pink */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #ccc;
+        }
+
+        h3 {
+            text-align: center;
+            color: rgb(151, 123, 136);
+        }
+
+        input {
+            width: 100%;
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-btn {
+            background-color: #ffcccc; /* Light pink */
+            color: black;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        /* Chat Window */
+        #chat-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 280px;
+            height: 350px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #ccc;
+        }
+
+        #chat-header {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        #chat-messages {
+            padding: 10px;
+            height: 250px;
+            overflow-y: auto;
+        }
+
+        #chat-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+      Floating Chat Button with Image   
+    <img id="chat-button" src="chat-speech-bubble.jpg" alt="Let's Chat">
+
+      Pre-Chat Form   
+    <div id="chat-form-container">
+        <h3>Enter Details to Chat</h3>
+        <input type="text" id="name" placeholder="* Name" required>
+        <input type="email" id="email" placeholder="* Email" required>
+        <button class="form-btn" id="start-chat">Start Chat</button>
+    </div>
+
+      Chat Container   
+    <div id="chat-container">
+        <div id="chat-header">Chatbot</div>
+        <div id="chat-messages"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+    </div>
+
+    <script>
+        document.getElementById("chat-button").addEventListener("click", function() {
+            document.getElementById("chat-form-container").style.display = "block";
+        });
+
+        document.getElementById("start-chat").addEventListener("click", function() {
+            var name = document.getElementById("name").value.trim();
+            var email = document.getElementById("email").value.trim();
+
+            if (name === "" || email === "") {
+                alert("Please fill all required fields!");
+                return;
+            }
+
+            // Hide form and show chat
+            document.getElementById("chat-form-container").style.display = "none";
+            document.getElementById("chat-container").style.display = "block";
+
+            var chatMessages = document.getElementById("chat-messages");
+            chatMessages.innerHTML += `<p><b>You:</b> Hi, I am ${name}.</p>`;
+            chatMessages.innerHTML += `<p><b>Bot:</b> Hello ${name}, how can I assist you today?</p>`;
+        });
+
+        document.getElementById("chat-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                var message = this.value;
+                if (message.trim() !== "") {
+                    var chatMessages = document.getElementById("chat-messages");
+                    chatMessages.innerHTML += `<p><b>You:</b> ${message}</p>`;
+                    this.value = "";
+
+                    // Simulate chatbot response
+                    setTimeout(() => {
+                        chatMessages.innerHTML += `<p><b>Bot:</b> Let me help you with that!</p>`;
+                    }, 1000);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
